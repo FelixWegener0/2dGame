@@ -1,4 +1,5 @@
 import pygame
+import random
 
 # pygame setup
 pygame.init()
@@ -31,6 +32,10 @@ movingToLeft1 = True
 # global variable for second object
 object_x2 = 0
 movingToLeft2 = True
+
+# global variable for third object
+object_x3 = 0
+movingToLeft3 = True
 
 # check if the player gets near object in x dimension
 def checkHitX(playerX, objectX, threshhold=60):
@@ -94,6 +99,18 @@ while running:
         movingToLeft2 = True
 
     if checkHitX(relative_x + screen.get_width() / 2, object_x2) and checkHitY(relative_y + screen.get_height(), screen.get_height() / 2 + 100):
+        running = False
+
+    # handel third moving object speed is random
+    pygame.draw.circle(screen, "black", pygame.Vector2( object_x3, screen.get_height() / 2 + 200) ,40)
+    object_x3 = handleUpdateMovingObjectPosition(object_x3, movingToLeft3, random.randint(10, 20))
+
+    if object_x3 > screen.get_width() - 10:
+        movingToLeft3 = False
+    if object_x3 < 10:
+        movingToLeft3 = True
+
+    if checkHitX(relative_x + screen.get_width() / 2, object_x3) and checkHitY(relative_y + screen.get_height(), screen.get_height() / 2 + 200):
         running = False
 
 
