@@ -19,23 +19,9 @@ movingValue = 20
 relative_x = 0
 relative_y = 0
 
-# value to check if player can access in direction
-allowMoveLeft = True
-allowMoveRight = True
-allowMoveUp = True
-allowMoveDown = True
-
-# global variable for first oject
-object_x1 = 0
-movingToLeft1 = True
-
-# global variable for second object
-object_x2 = 0
-movingToLeft2 = True
-
-# global variable for third object
-object_x3 = 0
-movingToLeft3 = True
+# array for object movment
+object_x = [0,0,0]
+movingLeft = [True, True, True]
 
 # check if the player gets near object in x dimension
 def checkHitX(playerX, objectX, threshhold=60):
@@ -78,51 +64,51 @@ while running:
     pygame.draw.circle(screen, "red", circlePosition, 40)
 
     # handle first moving object
-    pygame.draw.circle(screen, "black", pygame.Vector2( object_x1, screen.get_height() / 2) ,40)
+    pygame.draw.circle(screen, "black", pygame.Vector2( object_x[0], screen.get_height() / 2), 40)
 
-    object_x1 = handleUpdateMovingObjectPosition(object_x1, movingToLeft1)
-    if object_x1 > screen.get_width() - 10:
-        movingToLeft1 = False
-    if object_x1 < 10:
-        movingToLeft1 = True
+    object_x[0] = handleUpdateMovingObjectPosition(object_x[0], movingLeft[0])
+    if object_x[0] > screen.get_width() - 10:
+        movingLeft[0] = False
+    if object_x[0] < 10:
+        movingLeft[0] = True
 
-    if checkHitX(relative_x + screen.get_width() / 2, object_x1) and checkHitY(relative_y + screen.get_height(), screen.get_height() / 2):
+    if checkHitX(relative_x + screen.get_width() / 2, object_x[0]) and checkHitY(relative_y + screen.get_height(), screen.get_height() / 2):
         running = False
 
     # handel second moving object
-    pygame.draw.circle(screen, "black", pygame.Vector2( object_x2, screen.get_height() / 2 + 100) ,40)
-    object_x2 = handleUpdateMovingObjectPosition(object_x2, movingToLeft2, 25)
+    pygame.draw.circle(screen, "black", pygame.Vector2( object_x[1], screen.get_height() / 2 + 100), 40)
+    object_x[1] = handleUpdateMovingObjectPosition(object_x[1], movingLeft[1], 25)
 
-    if object_x2 > screen.get_width() - 10:
-        movingToLeft2 = False
-    if object_x2 < 10:
-        movingToLeft2 = True
+    if object_x[1] > screen.get_width() - 10:
+        movingLeft[1] = False
+    if object_x[1] < 10:
+        movingLeft[1] = True
 
-    if checkHitX(relative_x + screen.get_width() / 2, object_x2) and checkHitY(relative_y + screen.get_height(), screen.get_height() / 2 + 100):
+    if checkHitX(relative_x + screen.get_width() / 2, object_x[1]) and checkHitY(relative_y + screen.get_height(), screen.get_height() / 2 + 100):
         running = False
 
     # handel third moving object speed is random
-    pygame.draw.circle(screen, "black", pygame.Vector2( object_x3, screen.get_height() / 2 + 200) ,40)
-    object_x3 = handleUpdateMovingObjectPosition(object_x3, movingToLeft3, random.randint(5, 20))
+    pygame.draw.circle(screen, "black", pygame.Vector2( object_x[2], screen.get_height() / 2 + 200), 40)
+    object_x[2] = handleUpdateMovingObjectPosition(object_x[2], movingLeft[2], random.randint(5, 20))
 
-    if object_x3 > screen.get_width() - 10:
-        movingToLeft3 = False
-    if object_x3 < 10:
-        movingToLeft3 = True
+    if object_x[2] > screen.get_width() - 10:
+        movingLeft[2] = False
+    if object_x[2] < 10:
+        movingLeft[2] = True
 
-    if checkHitX(relative_x + screen.get_width() / 2, object_x3) and checkHitY(relative_y + screen.get_height(), screen.get_height() / 2 + 200):
+    if checkHitX(relative_x + screen.get_width() / 2, object_x[2]) and checkHitY(relative_y + screen.get_height(), screen.get_height() / 2 + 200):
         running = False
 
 
     # enable player to move
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_w] and allowMoveUp:
+    if keys[pygame.K_w]:
         relative_y -= movingValue
-    if keys[pygame.K_s] and allowMoveDown:
+    if keys[pygame.K_s]:
         relative_y += movingValue
-    if keys[pygame.K_a] and allowMoveLeft:
+    if keys[pygame.K_a]:
         relative_x -= movingValue
-    if keys[pygame.K_d] and allowMoveRight:
+    if keys[pygame.K_d]:
         relative_x += movingValue
 
     # flip() the display to put your work on screen
