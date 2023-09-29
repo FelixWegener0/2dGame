@@ -103,7 +103,7 @@ while running:
 
     # handel third moving object speed is random
     pygame.draw.circle(screen, "black", pygame.Vector2( object_x3, screen.get_height() / 2 + 200) ,40)
-    object_x3 = handleUpdateMovingObjectPosition(object_x3, movingToLeft3, random.randint(10, 20))
+    object_x3 = handleUpdateMovingObjectPosition(object_x3, movingToLeft3, random.randint(5, 20))
 
     if object_x3 > screen.get_width() - 10:
         movingToLeft3 = False
