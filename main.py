@@ -23,6 +23,12 @@ relative_y = 0
 object_x = [0,0,0]
 movingLeft = [True, True, True]
 
+# value if player is allowed to move in direction
+allowMovingUp = True
+allowMovingDown = True
+allowMovingLeft = True
+allowMovingRight = True
+
 # check if the player gets near object in x dimension
 def checkHitX(playerX, objectX, threshhold=60):
     spaceBetween = playerX - objectX
@@ -67,7 +73,7 @@ while running:
     pygame.draw.circle(screen, "black", pygame.Vector2( object_x[0], screen.get_height() / 2), 40)
 
     object_x[0] = handleUpdateMovingObjectPosition(object_x[0], movingLeft[0])
-    if object_x[0] > screen.get_width() - 10:
+    if object_x[0] > (screen.get_width() - 10):
         movingLeft[0] = False
     if object_x[0] < 10:
         movingLeft[0] = True
@@ -79,7 +85,7 @@ while running:
     pygame.draw.circle(screen, "black", pygame.Vector2( object_x[1], screen.get_height() / 2 + 100), 40)
     object_x[1] = handleUpdateMovingObjectPosition(object_x[1], movingLeft[1], 25)
 
-    if object_x[1] > screen.get_width() - 10:
+    if object_x[1] > (screen.get_width() - 10):
         movingLeft[1] = False
     if object_x[1] < 10:
         movingLeft[1] = True
@@ -91,7 +97,7 @@ while running:
     pygame.draw.circle(screen, "black", pygame.Vector2( object_x[2], screen.get_height() / 2 + 200), 40)
     object_x[2] = handleUpdateMovingObjectPosition(object_x[2], movingLeft[2], random.randint(5, 20))
 
-    if object_x[2] > screen.get_width() - 10:
+    if object_x[2] > (screen.get_width() - 10):
         movingLeft[2] = False
     if object_x[2] < 10:
         movingLeft[2] = True
@@ -99,16 +105,39 @@ while running:
     if checkHitX(relative_x + screen.get_width() / 2, object_x[2]) and checkHitY(relative_y + screen.get_height(), screen.get_height() / 2 + 200):
         running = False
 
+    # check if player is allowed to move in direction Left
+    if (relative_x + screen.get_width() / 2 ) < 10:
+        allowMovingLeft = False
+    else:
+        allowMovingLeft = True
+
+    # check if player is allowed to move in dircetion Right
+    if relative_x > (screen.get_width() / 2 - 10):
+        allowMovingRight = False
+    else:
+        allowMovingRight = True
+
+    # check if player is allowed to move in direction Down
+    if relative_y > 0:
+        allowMovingDown = False
+    else:
+        allowMovingDown = True
+
+    # check if player is allowed to move in direction Upw
+    if -relative_y > screen.get_height() - 10:
+        allowMovingUp = False
+    else:
+        allowMovingUp = True
 
     # enable player to move
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_w]:
+    if keys[pygame.K_w] and allowMovingUp:
         relative_y -= movingValue
-    if keys[pygame.K_s]:
+    if keys[pygame.K_s] and allowMovingDown:
         relative_y += movingValue
-    if keys[pygame.K_a]:
+    if keys[pygame.K_a] and allowMovingLeft:
         relative_x -= movingValue
-    if keys[pygame.K_d]:
+    if keys[pygame.K_d] and allowMovingRight:
         relative_x += movingValue
 
     # flip() the display to put your work on screen
