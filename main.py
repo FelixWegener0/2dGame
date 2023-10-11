@@ -1,6 +1,6 @@
 import pygame
-import enemy
-import player
+import enemy as en
+import player as pl
 
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
@@ -8,11 +8,11 @@ clock = pygame.time.Clock()
 running = True
 dt = 0
 
-player1 = player.Player(screen.get_width() / 2, screen.get_height())
+player1 = pl.Player(screen.get_width() / 2, screen.get_height())
 
 enemys = []
 for i in range(8):
-    enemys.append(enemy.Enemy(0, screen.get_height() / 2  - i * 40))
+    enemys.append(en.Enemy(0, screen.get_height() / 2  - i * 40))
 
 while running:
     for event in pygame.event.get():
