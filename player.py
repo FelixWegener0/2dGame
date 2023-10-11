@@ -37,9 +37,3 @@ class Player:
         if (keys[pygame.K_s] and self.allowMovingDown): self.y = self.y + speed
         if (keys[pygame.K_a] and self.allowMovingLeft): self.x = self.x - speed
         if (keys[pygame.K_d] and self.allowMovingRight): self.x = self.x + speed
-
-    def getPlayerX(self):
-        return self.x
-    
-    def getPlayerY(self):
-        return self.y
